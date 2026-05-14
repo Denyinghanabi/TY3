@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天翼校园网自动登录 - E-ESurfing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --primary-color: #00D4FF;
+            --secondary-color: #6366F1;
+            --dark-bg: #0F172A;
+            --light-bg: #1E293B;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+        }
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1a2e 50%, #16213e 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 15px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .hero {
+            padding: 150px 10% 100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero-left {
+            max-width: 600px;
+            z-index: 1;
+        }
+        .hero-title {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 25px;
+        }
+        .hero-title span {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-desc {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(0, 212, 255, 0.4);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-color);
+        }
+        .hero-right {
+            position: relative;
+            z-index: 1;
+        }
+        .feature-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            min-width: 300px;
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.15);
+        }
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .feature-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .features {
+            padding: 100px 10%;
+            background: rgba(30, 41, 59, 0.3);
+        }
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 80px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .feature-box {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+        .feature-box:hover {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: var(--primary-color);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        .feature-box .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(99, 102, 241, 0.1));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+        .feature-box h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        .feature-box p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .download {
+            padding: 120px 10%;
+            text-align: center;
+            position: relative;
+        }
+        .download::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        }
+        .download-card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+        }
+        .download-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 48px;
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.3);
+        }
+        .download-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .download-desc {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+        .download-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 60px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 50px rgba(0, 212, 255, 0.4);
+        }
+        .download-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.5);
+        }
+        .download-meta {
+            margin-top: 30px;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        .footer {
+            padding: 50px 10%;
+            background: rgba(15, 23, 42, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='rgba(30, 41, 59, 0.3)' fill-opacity='1' d='M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,218.7C672,235,768,245,864,229.3C960,213,1056,171,1152,160C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 120px 5% 80px;
+            }
+            .hero-left {
+                margin-bottom: 60px;
+            }
+            .hero-title {
+                font-size: 40px;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .nav-links {
+                gap: 20px;
+            }
+        }
+        @media (max-width: 640px) {
+            .hero-title {
+                font-size: 32px;
+            }
+            .hero-desc {
+                font-size: 16px;
+            }
+            .section-title {
+                font-size: 32px;
+            }
+            .download-card {
+                padding: 40px 25px;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo">觉得好用的话 可以捐助我们</div>
+        <div class="nav-links">
+            <a href="#features">功能特性</a>
+            <a href="#download">下载</a>
+            <a href="privacy.html">隐私政策</a>
+            <a href="terms.html">服务条款</a>
+            <a href="contact.html">联系我们</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-left">
+            <h1 class="hero-title">
+                天翼校园网<br>
+                <span>自动登录助手</span>
+            </h1>
+            <p class="hero-desc">
+                告别繁琐的登录流程，一键自动连接校园网络。支持广东电信天翼校园网，
+                稳定可靠，让你专注于学习和工作。
+            </p>
+            <div class="hero-buttons">
+                <a href="#download" class="btn btn-primary">
+                    <span>⬇️</span> 立即下载
+                </a>
+                <a href="#features" class="btn btn-secondary">
+                    <span>📋</span> 了解更多
+                </a>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">极速连接</h3>
+                <p class="feature-desc">毫秒级响应，自动检测网络状态，断开即重连</p>
+            </div>
+        </div>
+        <div class="wave"></div>
+    </section>
+
+    <section class="features" id="features">
+        <h2 class="section-title">功能特性</h2>
+        <p class="section-subtitle">为校园生活量身打造，让网络连接更简单</p>
+        
+        <div class="features-grid">
+            <div class="feature-box">
+                <div class="icon">🔄</div>
+                <h3>自动重连</h3>
+                <p>智能检测网络状态，断线自动重连，无需人工干预</p>
+            </div>
+            <div class="feature-box">
+                <div class="icon">🔐</div>
+                <h3>安全加密</h3>
+                <p>采用MD5加密算法，保护您的账号密码安全</p>
+            </div>
+            <div class="feature-box">
+                <div class="icon">💾</div>
+                <h3>账号保存</h3>
+                <p>支持记住密码功能，下次登录无需重复输入</p>
+            </div>
+            <div class="feature-box">
+                <div class="icon">📊</div>
+                <h3>状态监控</h3>
+                <p>实时显示网络状态，连接日志一目了然</p>
+            </div>
+            <div class="feature-box">
+                <div class="icon">📱</div>
+                <h3>跨平台</h3>
+                <p>支持Windows、Linux、路由器等多种平台</p>
+            </div>
+            <div class="feature-box">
+                <div class="icon">⚡</div>
+                <h3>零依赖</h3>
+                <p>无需安装Python/Java等运行环境，下载即可使用</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="download" id="download">
+        <div class="download-card">
+            <div class="download-icon">📦</div>
+            <h3 class="download-title">下载客户端</h3>
+            <p class="download-desc">适用于Windows系统的独立可执行文件，无需安装，双击即可运行</p>
+            <a href="校园网认证.zip" download class="download-btn">
+                <span>💾</span> 下载 v1.0.0
+            </a>
+            <p style="color: #94A3B8; font-size: 13px; margin-top: 20px; line-height: 1.6;">本软件仅用于广东电信天翼校园网合法登录，请勿用于其他用途</p>
+            <p class="download-meta">文件大小：约 150MB | 支持 Windows 7/8/10/11 | 下载后解压运行</p>
+        </div>
+    </section>
+
+    <footer class="footer" id="about">
+        <div class="footer-links">
+            <a href="privacy.html">隐私政策</a>
+            <a href="terms.html">服务条款</a>
+            <a href="contact.html">联系我们</a>
+            <a href="#">使用教程</a>
+        </div>
+        <p class="footer-copyright">
+            © 2026 天翼校园网自动登录助手 | <a href="privacy.html" style="color: #94A3B8; text-decoration: none;">隐私政策</a> | <a href="terms.html" style="color: #94A3B8; text-decoration: none;">服务条款</a> | <a href="contact.html" style="color: #94A3B8; text-decoration: none;">联系我们</a>
+        </p>
+    </footer>
+</body>
+</html>

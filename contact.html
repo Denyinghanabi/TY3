@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们 - E-ESurfing</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #00D4FF;
+            --dark-bg: #0F172A;
+            --light-bg: #1E293B;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+        }
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1a2e 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        .nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 15px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--primary-color), #6366F1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary-color); }
+        .container { max-width: 800px; margin: 60px auto; padding: 0 20px; }
+        h1 { font-size: 36px; margin-bottom: 30px; }
+        .contact-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+        .contact-card h2 { font-size: 24px; margin-bottom: 20px; color: var(--primary-color); }
+        .contact-info { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .contact-info svg { width: 24px; height: 24px; color: var(--primary-color); }
+        .contact-info a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+        .contact-info a:hover { color: var(--primary-color); }
+        .footer {
+            padding: 50px 10%;
+            background: rgba(15, 23, 42, 0.8);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            margin-top: 60px;
+        }
+        .footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; }
+        .footer-links a:hover { color: var(--primary-color); }
+        .footer-copyright { color: var(--text-secondary); font-size: 13px; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo">E-ESurfing</div>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="privacy.html">隐私政策</a>
+            <a href="terms.html">服务条款</a>
+            <a href="contact.html">联系我们</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>联系我们</h1>
+        
+        <div class="contact-card">
+            <h2>联系方式</h2>
+            <div class="contact-info">
+                <span>📧</span>
+                <span>邮箱：<a href="mailto:support@denyinghanabi.xyz">support@denyinghanabi.xyz</a></span>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <h2>常见问题</h2>
+            <p><strong>Q: 软件无法登录怎么办？</strong></p>
+            <p>A: 请检查您的账号密码是否正确，确保您所在的网络是广东电信天翼校园网。</p>
+            
+            <p><strong>Q: 软件会收集我的个人信息吗？</strong></p>
+            <p>A: 不会。本软件不会收集、存储或传输任何个人信息，包括账号密码。</p>
+            
+            <p><strong>Q: 软件支持哪些系统？</strong></p>
+            <p>A: 目前支持 Windows 7/8/10/11 系统。</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="index.html">首页</a>
+            <a href="privacy.html">隐私政策</a>
+            <a href="terms.html">服务条款</a>
+            <a href="contact.html">联系我们</a>
+        </div>
+        <p class="footer-copyright">© 2026 天翼校园网自动登录助手 | <a href="privacy.html">隐私政策</a> | <a href="terms.html">服务条款</a> | <a href="contact.html">联系我们</a></p>
+    </footer>
+</body>
+</html>

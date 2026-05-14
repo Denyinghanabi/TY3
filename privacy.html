@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>隐私政策 - E-ESurfing</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #00D4FF;
+            --dark-bg: #0F172A;
+            --light-bg: #1E293B;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+        }
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1a2e 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        .nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 15px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--primary-color), #6366F1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary-color); }
+        .container { max-width: 800px; margin: 60px auto; padding: 0 20px; }
+        h1 { font-size: 36px; margin-bottom: 30px; }
+        h2 { font-size: 24px; margin: 30px 0 15px; color: var(--primary-color); }
+        p { color: var(--text-secondary); line-height: 1.8; margin-bottom: 15px; }
+        ul { color: var(--text-secondary); line-height: 1.8; margin-left: 20px; margin-bottom: 15px; }
+        .footer {
+            padding: 50px 10%;
+            background: rgba(15, 23, 42, 0.8);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            margin-top: 60px;
+        }
+        .footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; }
+        .footer-links a:hover { color: var(--primary-color); }
+        .footer-copyright { color: var(--text-secondary); font-size: 13px; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo">E-ESurfing</div>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="privacy.html">隐私政策</a>
+            <a href="terms.html">服务条款</a>
+            <a href="contact.html">联系我们</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>隐私政策</h1>
+        <p>更新日期：2026年5月</p>
+        
+        <h2>1. 信息收集</h2>
+        <p>本软件（"天翼校园网自动登录助手"）重视用户隐私，我们承诺不会收集、存储或传输用户的任何个人信息，包括但不限于：</p>
+        <ul>
+            <li>用户的校园网账号和密码</li>
+            <li>用户的设备信息</li>
+            <li>用户的网络连接信息</li>
+            <li>用户的地理位置信息</li>
+        </ul>
+
+        <h2>2. 数据处理</h2>
+        <p>用户输入的账号密码仅用于与广东电信天翼校园网认证服务器进行通信，完成认证后立即从内存中清除，不会保存到任何存储介质。</p>
+
+        <h2>3. 第三方服务</h2>
+        <p>本软件仅与广东电信官方认证服务器进行通信，不使用任何第三方数据分析或追踪服务。</p>
+
+        <h2>4. 隐私政策变更</h2>
+        <p>我们可能会不定期更新本隐私政策。更新后，我们会在网站上发布新的隐私政策。</p>
+
+        <h2>5. 联系我们</h2>
+        <p>如果您对本隐私政策有任何疑问，请通过 support@denyinghanabi.xyz 联系我们。</p>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="index.html">首页</a>
+            <a href="privacy.html">隐私政策</a>
+            <a href="terms.html">服务条款</a>
+            <a href="contact.html">联系我们</a>
+        </div>
+        <p class="footer-copyright">© 2026 天翼校园网自动登录助手 | <a href="privacy.html">隐私政策</a> | <a href="terms.html">服务条款</a> | <a href="contact.html">联系我们</a></p>
+    </footer>
+</body>
+</html>
